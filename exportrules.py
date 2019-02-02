@@ -1,4 +1,5 @@
 import re
+from typing import TextIO
 
 rules = list()
 lookfor: str = 'rule'  # can be rule or desc
@@ -10,9 +11,9 @@ strRule = ''
 
 
 try:
-    f = open('config')
-except:
-    print('could not open file')
+    f: TextIO = open('config')
+except FileNotFoundError:
+    print('Could not open file "config"')
     exit()
 for line in f:
     line = line.strip()
