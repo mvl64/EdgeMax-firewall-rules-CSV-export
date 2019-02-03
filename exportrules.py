@@ -2,13 +2,14 @@ import re
 import tkinter as tk
 from tkinter import filedialog
 
-def ReadRules( rules ):
-    lookfor: str = 'rule'  # can be rule or desc
-    strDescPattern = ''  # pattern to find the description for the rule we just found
-    re_elements = ''  # elements of the regular expression
-    LinesSearchedForDesc = 0  # how many lines have we tried to find a matching description
-    strDesc = ''  # for output file: description
-    strRule = ''  # for output file: rule
+
+def readrules(rules):
+    lookfor: str = 'rule'       # can be rule or description
+    searchpattern = ''          # pattern to find the description for the rule we just found
+    rule_elements = ''          # elements of the regular expression
+    lines = 0                   # how many lines have we tried to find a matching description
+    out_description = ''        # for output file: description
+    out_rule = ''               # for output file: rule
 
     root = tk.Tk()
     root.withdraw()
@@ -22,45 +23,47 @@ def ReadRules( rules ):
     for line in f:
         line = line.strip()
         if lookfor == 'rule':
-            re_elements = re.findall('(^set firewall name )(.+)( rule )(.+) action (.+)', line)
-            if re_elements.__len__() > 0:
+            rule_elements = re.findall('(^set firewall name )(.+)( rule )(.+) action (.+)', line)
+            if rule_elements.__len__() > 0:
                 '-- build the string for this rule'
-                strRule = re_elements[0][1].strip() + '-' + re_elements[0][3].strip() + '-' + re_elements[0][4][0].upper()
-                strDescPattern = re_elements[0][0] + re_elements[0][1] + re_elements[0][2] + re_elements[0][
+                out_rule = rule_elements[0][1].strip() + '-' + rule_elements[0][3].strip() + '-' + rule_elements[0][4][0].upper()
+                searchpattern = rule_elements[0][0] + rule_elements[0][1] + rule_elements[0][2] + rule_elements[0][
                     3] + ' ' + 'description (.+)'
-                lookfor = 'desc'
-                LinesSearchedForDesc = 0
-                strDesc = ''
+                lookfor = 'description'
+                lines = 0
+                out_description = ''
         else:
             # now search for the description - this may appear in the next line, or a bit further down ...
             # if not found after 4 lines, we'll assume there is no description and continue searching for the next rule
-            Desc = re.findall(strDescPattern, line)
-            if Desc.__len__() > 0:
-                strDesc = re_elements[0][1].strip() + '-' + Desc[0]
-                strDesc = strDesc.replace("'", "")
+            rule_description = re.findall(searchpattern, line)
+            if rule_description.__len__() > 0:
+                out_description = rule_elements[0][1].strip() + '-' + rule_description[0]
+                out_description = out_description.replace("'", "")
             else:
                 # not yet found, search in next line
-                LinesSearchedForDesc += 1
-                if LinesSearchedForDesc > 2:
-                    strDesc = '-'
-            if strDesc.__len__() > 0:
-                strOutput = strRule + "," + strDesc
-                rules.append(strOutput)
+                lines += 1
+                if lines > 2:
+                    out_description = '-'
+            if out_description.__len__() > 0:
+                rules.append(out_rule + "," + out_description)
                 lookfor = 'rule'
     f.close()
 
-def WriteRules(rules):
+
+def writerules(rules):
     # now write all the rules to a CSV file
-    fOut = open('firewall_rules.csv', 'w')
-    fOut.write('Rule,Description\n')
+    outfile = open('firewall_rules.csv', 'w')
+    outfile.write('Rule,Description\n')
     for i in range(len(rules)):
-        fOut.write(rules[i] + '\n')
-    fOut.close()
+        outfile.write(rules[i] + '\n')
+    outfile.close()
+
 
 def main():
     rules = list()
-    ReadRules(rules)
-    WriteRules(rules)
+    readrules(rules)
+    writerules(rules)
+
 
 if __name__ == "__main__":
     main()
