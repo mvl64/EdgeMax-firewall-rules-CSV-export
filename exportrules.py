@@ -1,5 +1,6 @@
 import re
-from typing import TextIO
+import tkinter as tk
+from tkinter import filedialog
 
 rules = list()
 lookfor: str = 'rule'  # can be rule or desc
@@ -9,9 +10,13 @@ LinesSearchedForDesc = 0
 strDesc = ''
 strRule = ''
 
+root = tk.Tk()
+root.withdraw()
+
+file_path = filedialog.askopenfilename()
 
 try:
-    f: TextIO = open('config')
+    f = open(file_path)
 except FileNotFoundError:
     print('Could not open file "config"')
     exit()
@@ -29,6 +34,7 @@ for line in f:
             strDesc = ''
     else:
         # now search for the description - this may appear in the next line, or a bit further down ...
+        # if not found after 4 lines, we'll assume there is no description and continue searching for the next rule
         Desc = re.findall(strDescPattern, line)
         if Desc.__len__() > 0:
             strDesc = strFirst[0][1].strip() + '-' + Desc[0]
