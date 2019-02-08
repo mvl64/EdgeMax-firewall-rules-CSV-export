@@ -1,0 +1,155 @@
+Rule,Description
+DROP_SITES-10-D,-
+GUEST_IN-10-D,GUEST_IN-Drop invalid state
+GUEST_IN-20-A,GUEST_IN-Allow Laerhome2
+GUEST_IN-30-A,GUEST_IN-Allow MDNS broadcast forwarding
+GUEST_IN-40-A,GUEST_IN-Accept DNS to Pi-hole
+GUEST_IN-50-A,GUEST_IN-Web traffic to Pi-hole
+GUEST_IN-60-A,GUEST_IN-Traffic to Storage network
+GUEST_IN-70-D,GUEST_IN-Mount NAS from PI
+GUEST_IN-80-A,GUEST_IN-Samba Storage network
+GUEST_IN-90-D,GUEST_IN-Drop traffic to internal LAN_NETWORKS
+GUEST_IN-100-A,GUEST_IN-Allow NTP (Time Protocol)
+GUEST_IN-110-A,GUEST_IN-Allow Torrent traffic through a Proxy
+GUEST_IN-120-A,GUEST_IN-Allow Spotify
+GUEST_IN-130-A,GUEST_IN-Accept Social Media
+GUEST_IN-140-A,GUEST_IN-Accept WEB traffic
+GUEST_IN-150-A,GUEST_IN-Allow messaging
+GUEST_IN-160-A,GUEST_IN-Allow Nissan 
+GUEST_IN-170-A,GUEST_IN-Allow ICMP
+GUEST_IN-180-A,GUEST_IN-Accept Established/Related to local networks
+GUEST_IN-190-A,GUEST_IN-Torrent_Pi
+GUEST_IN-200-A,GUEST_IN-Allow DNS
+GUEST_IN-210-D,GUEST_IN-Block Location services
+GUEST_IN-230-A,GUEST_IN-Allow email
+GUEST_IN-240-A,GUEST_IN-Allow access to Chromecast
+GUEST_IN-250-A,GUEST_IN-Accept Established/Related
+GUEST_LOCAL-10-A,GUEST_LOCAL-Accept DNS
+GUEST_LOCAL-20-A,GUEST_LOCAL-Accept DHCP
+GUEST_LOCAL-21-D,GUEST_LOCAL-Drop Multicast
+GUEST_LOCAL-22-A,GUEST_LOCAL-Accept Multicast
+IPTV_IN-1-D,IPTV_IN-Block IPTV at night
+IoT_IN-10-D,IoT_IN-Drop invalid state
+IoT_IN-20-A,IoT_IN-Accept DNS
+IoT_IN-30-A,IoT_IN-NTP
+IoT_IN-40-D,IoT_IN-Drop traffic to internal LAN_NETWORKS
+IoT_IN-50-A,IoT_IN-Accept Established/Related to local networks
+IoT_IN-60-A,IoT_IN-Accept Established/Related to VPN
+IoT_IN-70-A,IoT_IN-Accept Established/Related to GUEST networks
+IoT_IN-80-A,IoT_IN-Accept Printer traffic
+IoT_IN-90-D,IoT_IN-Outgoing traffic from HUE bridge
+IoT_IN-100-A,IoT_IN-Accept ChromeCast
+IoT_IN-110-A,IoT_IN-Accept ChromeCast
+IoT_LOCAL2-10-A,IoT_LOCAL2-Accept DNS
+IoT_LOCAL2-20-A,IoT_LOCAL2-Accept DHCP
+IoT_LOCAL2-21-D,IoT_LOCAL2-Drop Multicast
+IoT_LOCAL2-22-A,IoT_LOCAL2-Accept Multicast
+IoT_LOCAL2-23-D,IoT_LOCAL2-Drop netbios
+IoT_LOCAL2-24-D,IoT_LOCAL2-Drop mDNS
+IoT_LOCAL2-25-D,IoT_LOCAL2-HUE multicast
+IoT_LOCAL2-26-A,IoT_LOCAL2-ICMP
+KODI_IN-10-D,KODI_IN-Drop invalid state
+KODI_IN-20-A,KODI_IN-Local streaming Laerhome2
+KODI_IN-30-A,KODI_IN-Allow DNS
+KODI_IN-40-D,KODI_IN-Drop traffic to internal LAN_NETWORKS
+KODI_IN-50-A,KODI_IN-Allow NTP (Time Protocol)
+KODI_IN-60-A,KODI_IN-Accept WEB traffic
+KODI_IN-70-A,KODI_IN-Allow ICMP
+KODI_IN-80-A,KODI_IN-Accept Yatse traffic for local controllers
+KODI_IN-90-A,KODI_IN-Accept PIA VPN traffic
+KODI_LOCAL-10-A,KODI_LOCAL-Accept DNS
+KODI_LOCAL-20-A,KODI_LOCAL-Accept DHCP
+KODI_LOCAL-21-A,KODI_LOCAL-Accept Multicast
+KODI_LOCAL-22-A,KODI_LOCAL-Accept KODI searching each other
+LAN_IN-10-D,LAN_IN-Drop invalid
+LAN_IN-20-D,LAN_IN-Drop social media
+LAN_IN-30-A,LAN_IN-Log Marco Laptop
+LAN_IN-40-A,LAN_IN-Allow Squeezebox
+LAN_IN-50-A,LAN_IN-Traffic to Storage network
+LAN_IN-60-R,LAN_IN-Traffic to Storage network unknown hosts
+LAN_IN-70-A,LAN_IN-Traffic to Storage network
+LAN_IN-80-A,LAN_IN-Accept DNS to Pi-hole
+LAN_IN-90-R,LAN_IN-Reject web traffic to Pi-hole
+LAN_IN-100-A,LAN_IN-Philips HUE
+LAN_IN-110-A,LAN_IN-Accept IOT traffic
+LAN_IN-120-A,LAN_IN-Accept access to Management network
+LAN_IN-130-A,LAN_IN-Allow traffic to GUEST network
+LAN_IN-140-A,LAN_IN-Allow messaging
+LAN_IN-150-A,LAN_IN-Accept WEB traffic
+LAN_IN-160-A,LAN_IN-Accept network management traffic
+LAN_IN-170-A,LAN_IN-Accept network management traffic
+LAN_IN-180-A,LAN_IN-Allow ICMP
+LAN_IN-190-A,LAN_IN-Allow Printing and Scanning
+LAN_IN-200-A,LAN_IN-Allow SIP
+LAN_IN-210-A,LAN_IN-Allow Spotify
+LAN_IN-220-A,LAN_IN-Accept VOIP
+LAN_IN-230-A,LAN_IN-Accept ongoing connections
+LAN_IN-240-A,LAN_IN-Allow incoming to HomeServer
+LAN_IN-250-A,LAN_IN-Traffic to KODI network
+LAN_IN-260-A,LAN_IN-PIA VPN Tunnel
+LAN_IN-270-A,LAN_IN-Logging these sites, not sure why they are active
+LAN_LOCAL-10-A,LAN_LOCAL-Accept DNS
+LAN_LOCAL-20-A,LAN_LOCAL-Accept DHCP
+LAN_LOCAL-30-A,LAN_LOCAL-Accept Time Syncing (SNTP)
+LAN_LOCAL-40-A,LAN_LOCAL-Accept Multicast
+LAN_LOCAL-50-A,LAN_LOCAL-Accept Squeezebox
+LAN_LOCAL-60-A,LAN_LOCAL-Accept NetBios
+LAN_LOCAL-70-A,LAN_LOCAL-Accept ICMP
+LAN_LOCAL-80-A,LAN_LOCAL-Accept UPnP
+LAN_LOCAL-90-A,LAN_LOCAL-Accept FireFox for Android polling
+LAN_LOCAL-100-A,LAN_LOCAL-Accept HTTPS access
+LAN_LOCAL-110-D,LAN_LOCAL-Drop Spotify P2P
+LAN_LOCAL-120-A,LAN_LOCAL-Accept homeserver WOL
+MANAGEMENT_IN-10-A,MANAGEMENT_IN-Accept to UNMS server
+MANAGEMENT_IN-20-A,MANAGEMENT_IN-Accept network management traffic
+MANAGEMENT_IN-30-A,MANAGEMENT_IN-Accept traffic to management devices
+MANAGEMENT_IN-40-A,MANAGEMENT_IN-Accept UNIFI controller traffic
+MANAGEMENT_IN-50-A,MANAGEMENT_IN-Allow pi-hole DNS
+MANAGEMENT_IN-60-D,MANAGEMENT_IN-Drop invalid
+MANAGEMENT_IN-70-A,MANAGEMENT_IN-Local traffic from RedPi
+MANAGEMENT_IN-80-A,MANAGEMENT_IN-HTTP traffic from RedPi
+MANAGEMENT_IN-90-A,MANAGEMENT_IN-Accept cloudkey cloud access
+MANAGEMENT_IN-100-A,MANAGEMENT_IN-Accept ongoing connections
+MANAGEMENT_IN-110-A,MANAGEMENT_IN-Allow outbound SMTP connections
+MANAGEMENT_IN-120-A,MANAGEMENT_IN-HTTP traffic from AC PRO
+MANAGEMENT_IN-130-A,MANAGEMENT_IN-Allow logging to Synology
+MANAGEMENT_LOCAL-1-A,MANAGEMENT_LOCAL-Accept network management traffic
+MANAGEMENT_LOCAL-2-D,MANAGEMENT_LOCAL-DROP IGMP
+OpenVPN_IN-1-D,OpenVPN_IN-Drop Invald
+OpenVPN_IN-2-A,OpenVPN_IN-Philips HUE
+OpenVPN_IN-3-A,OpenVPN_IN-NAS traffic
+STORAGE_LOCAL-10-A,STORAGE_LOCAL-Accept DNS
+STORAGE_LOCAL-20-A,STORAGE_LOCAL-Accept DHCP
+STORAGE_LOCAL-30-A,STORAGE_LOCAL-Accept Time Syncing (SNTP)
+STORAGE_LOCAL-40-A,STORAGE_LOCAL-Accept Multicast
+STORAGE_LOCAL-50-A,STORAGE_LOCAL-Accept Squeezebox
+STORAGE_LOCAL-60-A,STORAGE_LOCAL-Accept NetBios
+STORAGE_LOCAL-70-A,STORAGE_LOCAL-Accept ICMP
+STORAGE_LOCAL-90-A,STORAGE_LOCAL-Accept FireFox for Android polling
+STORAGE_LOCAL-100-A,STORAGE_LOCAL-Accept HTTPS access
+STORAGE_LOCAL-110-D,STORAGE_LOCAL-Drop Spotify P2P
+STORAGE_LOCAL-111-A,STORAGE_LOCAL-Allow UNMS communicating with the router
+ST_IN-20-A,ST_IN-Accept SSH traffic for RedPi
+ST_IN-30-D,ST_IN-DROP access to Management network
+ST_IN-40-A,ST_IN-Hyperbackup to C2
+ST_IN-50-A,ST_IN-Accept continued non-local traffic
+ST_IN-60-A,ST_IN-Accept continued traffic
+ST_IN-70-A,ST_IN-Accept network management traffic
+ST_IN-80-A,ST_IN-Accept network management traffic
+ST_IN-90-D,ST_IN-Drop invalid
+ST_IN-100-A,ST_IN-Allow ICMP
+ST_IN-110-A,ST_IN-Accept ongoing connections
+ST_IN-120-A,ST_IN-Allow incoming to HomeServer
+ST_IN-130-A,ST_IN-Traffic to KODI network
+ST_IN-140-A,ST_IN-Accept QuickConnect traffic
+WAN_IN-10-A,WAN_IN-Accept Synology traffic
+WAN_IN-20-A,WAN_IN-Accept Synology OpenVPN
+WAN_IN-30-A,WAN_IN-Synology DSM
+WAN_IN-40-A,WAN_IN-Synology Drive
+WAN_IN-50-A,WAN_IN-Allow established/related
+WAN_IN-60-D,WAN_IN-Drop invalid state
+WAN_LOCAL-10-D,WAN_LOCAL-Drop invalid state
+WAN_LOCAL-20-A,WAN_LOCAL-Accept Shieldsup for ISP testing
+WAN_LOCAL-30-D,WAN_LOCAL-Drop Shodan scanners
+WAN_LOCAL-40-A,WAN_LOCAL-OpenVPN
+WAN_LOCAL-50-A,WAN_LOCAL-Allow established/related
