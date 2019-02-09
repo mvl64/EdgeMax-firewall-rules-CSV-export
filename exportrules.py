@@ -2,6 +2,43 @@ import re
 import tkinter as tk
 from tkinter import filedialog
 
+def create_output(match):
+    # match is the regular expression match, layout:
+    # [0] name
+    # [1] rest of the string
+
+    out_string = ''
+    items = re.findall('rule (.+) \{\n(.+)action (.+)',match[1])
+    if items.__len__() > 0 :
+        out_string = match[0]+'-'+items[0][0]+'-'+items[0][2][0].upper()
+        items = re.findall('description (.+)',match[1])
+        if items.__len__()>0:
+            # use the description
+            out_string+=","+items[0]
+        else:
+            out_string+=","
+        return out_string
+
+def readconfig(rules):
+    # read file into buffer
+    root = tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
+    buffer = ''
+
+
+    try:
+        f = open(file_path)
+    except FileNotFoundError:
+        print('Could not open file!')
+        exit()
+    buffer = f.read()
+
+    matches = re.findall('name (.+) \{([^\t}]+)\}', buffer)
+    for match in matches:
+        # create the output
+        out_rule = create_output(match)
+        rules.append(out_rule)
 
 def readrules(rules):
     lookfor: str = 'rule'       # can be rule or description
@@ -61,7 +98,8 @@ def writerules(rules):
 
 def main():
     rules = list()
-    readrules(rules)
+    readconfig(rules)
+    # readrules(rules)
     writerules(rules)
 
 
