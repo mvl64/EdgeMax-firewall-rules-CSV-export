@@ -2,8 +2,10 @@ import re
 import tkinter as tk
 from tkinter import filedialog
 
+FIREWALL_RULES_CSV = 'firewall_rules.csv'
 
-def readrules(rules):
+
+def readconfig(rules):
     lookfor: str = 'rule'       # can be rule or description
     searchpattern = ''          # pattern to find the description for the rule we just found
     rule_elements = ''          # elements of the regular expression
@@ -45,23 +47,43 @@ def readrules(rules):
                 if lines > 2:
                     out_description = '-'
             if out_description.__len__() > 0:
-                rules.append(out_rule + "," + out_description)
+                rules[out_rule] = out_rule + "," + out_description
                 lookfor = 'rule'
     f.close()
 
 
+def readrules(rules):
+    # read existing rules, to be updated in the next step
+    # this allows old rules (no longer relevant in the current configuration) to still be
+    # available for matching in Splunk)
+    f = open(FIREWALL_RULES_CSV)
+    first = True
+    for line in f:
+        if not first:
+            elements = line.split(',')
+            rules[elements[0]] = line.strip()
+        first = False
+
+
+
 def writerules(rules):
     # now write all the rules to a CSV file
-    outfile = open('firewall_rules.csv', 'w')
+    outfile = open(FIREWALL_RULES_CSV, 'w')
     outfile.write('Rule,Description\n')
-    for i in range(len(rules)):
-        outfile.write(rules[i] + '\n')
+    for key in rules:
+        outfile.write((rules[key]+'\n'))
     outfile.close()
 
 
 def main():
-    rules = list()
+    rules = dict()
+
+    # read existing rules, so the current items can be added
+    # (to ensure old events still have recognised firewall rule descriptions)
     readrules(rules)
+
+    # now read current edgerouter config to update existing rules
+    readconfig(rules)
     writerules(rules)
 
 
