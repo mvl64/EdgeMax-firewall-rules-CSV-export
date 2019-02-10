@@ -18,7 +18,7 @@ def readconfig(file_path, rules):
         f = open(file_path)
     except FileNotFoundError:
         print('Could not open file!')
-        exit()
+        return False
     for line in f:
         line = line.strip()
         if lookfor == 'rule':
@@ -47,6 +47,7 @@ def readconfig(file_path, rules):
                 rules[out_rule] = out_rule + "," + out_description
                 lookfor = 'rule'
     f.close()
+    return True
 
 
 def getfilename():
@@ -81,6 +82,9 @@ def writerules(directory, rules):
 def main():
     rules = dict()
     file_path = getfilename()
+    if file_path == '':
+        exit()
+
     directory = os.path.dirname(file_path)
 
     # read existing rules, so the current items can be added
@@ -88,8 +92,8 @@ def main():
     readrules(directory, rules)
 
     # now read current edgerouter config to update existing rules
-    readconfig(file_path, rules,)
-    writerules(directory, rules)
+    if readconfig(file_path, rules,):
+        writerules(directory, rules)
 
 
 if __name__ == "__main__":

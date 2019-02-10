@@ -1,12 +1,11 @@
 Rule,Description
-DROP_SITES-10-D,-
 GUEST_IN-10-D,GUEST_IN-Drop invalid state
 GUEST_IN-20-A,GUEST_IN-Allow Laerhome2
 GUEST_IN-30-A,GUEST_IN-Allow MDNS broadcast forwarding
 GUEST_IN-40-A,GUEST_IN-Accept DNS to Pi-hole
 GUEST_IN-50-A,GUEST_IN-Web traffic to Pi-hole
 GUEST_IN-60-A,GUEST_IN-Traffic to Storage network
-GUEST_IN-70-D,GUEST_IN-Mount NAS from PI
+GUEST_IN-70-A,GUEST_IN-Continued traffic to NAS from PI
 GUEST_IN-80-A,GUEST_IN-Samba Storage network
 GUEST_IN-90-D,GUEST_IN-Drop traffic to internal LAN_NETWORKS
 GUEST_IN-100-A,GUEST_IN-Allow NTP (Time Protocol)
@@ -46,7 +45,7 @@ IoT_LOCAL2-21-D,IoT_LOCAL2-Drop Multicast
 IoT_LOCAL2-22-A,IoT_LOCAL2-Accept Multicast
 IoT_LOCAL2-23-D,IoT_LOCAL2-Drop netbios
 IoT_LOCAL2-24-D,IoT_LOCAL2-Drop mDNS
-IoT_LOCAL2-25-D,IoT_LOCAL2-HUE multicast
+IoT_LOCAL2-25-A,IoT_LOCAL2-HUE multicast
 IoT_LOCAL2-26-A,IoT_LOCAL2-ICMP
 KODI_IN-10-D,KODI_IN-Drop invalid state
 KODI_IN-20-A,KODI_IN-Local streaming Laerhome2
@@ -129,6 +128,7 @@ STORAGE_LOCAL-90-A,STORAGE_LOCAL-Accept FireFox for Android polling
 STORAGE_LOCAL-100-A,STORAGE_LOCAL-Accept HTTPS access
 STORAGE_LOCAL-110-D,STORAGE_LOCAL-Drop Spotify P2P
 STORAGE_LOCAL-111-A,STORAGE_LOCAL-Allow UNMS communicating with the router
+ST_IN-10-D,ST_IN-Drop social media
 ST_IN-20-A,ST_IN-Accept SSH traffic for RedPi
 ST_IN-30-D,ST_IN-DROP access to Management network
 ST_IN-40-A,ST_IN-Hyperbackup to C2
@@ -153,3 +153,5 @@ WAN_LOCAL-20-A,WAN_LOCAL-Accept Shieldsup for ISP testing
 WAN_LOCAL-30-D,WAN_LOCAL-Drop Shodan scanners
 WAN_LOCAL-40-A,WAN_LOCAL-OpenVPN
 WAN_LOCAL-50-A,WAN_LOCAL-Allow established/related
+WAN_LOCAL-60-D,WAN_LOCAL-Drop Discovery packets
+GUEST_IN-10-A,GUEST_IN-Drop invalid state
