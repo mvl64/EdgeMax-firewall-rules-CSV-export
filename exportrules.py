@@ -1,21 +1,18 @@
 import re
+import os
 import tkinter as tk
 from tkinter import filedialog
 
 FIREWALL_RULES_CSV = 'firewall_rules.csv'
 
 
-def readconfig(rules):
+def readconfig(file_path, rules):
     lookfor: str = 'rule'       # can be rule or description
     searchpattern = ''          # pattern to find the description for the rule we just found
     rule_elements = ''          # elements of the regular expression
     lines = 0                   # how many lines have we tried to find a matching description
     out_description = ''        # for output file: description
     out_rule = ''               # for output file: rule
-
-    root = tk.Tk()
-    root.withdraw()
-    file_path = filedialog.askopenfilename()
 
     try:
         f = open(file_path)
@@ -52,11 +49,18 @@ def readconfig(rules):
     f.close()
 
 
-def readrules(rules):
+def getfilename():
+    root = tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
+    return file_path
+
+
+def readrules(directory, rules):
     # read existing rules, to be updated in the next step
     # this allows old rules (no longer relevant in the current configuration) to still be
     # available for matching in Splunk)
-    f = open(FIREWALL_RULES_CSV)
+    f = open(directory + '/' + FIREWALL_RULES_CSV)
     first = True
     for line in f:
         if not first:
@@ -65,10 +69,9 @@ def readrules(rules):
         first = False
 
 
-
-def writerules(rules):
+def writerules(directory, rules):
     # now write all the rules to a CSV file
-    outfile = open(FIREWALL_RULES_CSV, 'w')
+    outfile = open(directory + '/' + FIREWALL_RULES_CSV, 'w')
     outfile.write('Rule,Description\n')
     for key in rules:
         outfile.write((rules[key]+'\n'))
@@ -77,14 +80,16 @@ def writerules(rules):
 
 def main():
     rules = dict()
+    file_path = getfilename()
+    directory = os.path.dirname(file_path)
 
     # read existing rules, so the current items can be added
     # (to ensure old events still have recognised firewall rule descriptions)
-    readrules(rules)
+    readrules(directory, rules)
 
     # now read current edgerouter config to update existing rules
-    readconfig(rules)
-    writerules(rules)
+    readconfig(file_path, rules,)
+    writerules(directory, rules)
 
 
 if __name__ == "__main__":
