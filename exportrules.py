@@ -19,26 +19,54 @@ def create_output(match):
             out_string+=","
         return out_string
 
+def parseblock(block, rules):
+    reName = re.findall('name (.+) \{', block)
+    reRules = re.findall(' rule (.+) {', block)
+    reActions = re.findall(' action (.+)\n', block)
+    reDescriptions = re.findall(' description (.+)\n', block)
+    do = 0  #do: description offset. This is used because there is not always a description of the ruleset.
+            # In case there isn't, the do = 0!
+    if reDescriptions.__len__()>reRules.__len__():
+        do = 1
+
+    #build the rule list
+    for i in range(0, reRules.__len__()):
+        out_rule = reName[0]+'-'+reRules[i]+'-'+reActions[i][0].upper()+','+reName[0]+'-'+reDescriptions[i+do].replace('"','')
+        rules.append(out_rule)
+
+
 def readconfig(rules):
     # read file into buffer
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename()
     buffer = ''
-
+    blockmatching = False
+    i = 0
 
     try:
         f = open(file_path)
     except FileNotFoundError:
         print('Could not open file!')
         exit()
-    buffer = f.read()
+    for line in f:
+        # line = line.strip()
+        i+=1
+        if blockmatching:
+            if line == '}':
+                parseblock(block, rules)
+            else:
+                block+=line
 
-    matches = re.findall('name (.+) \{([^\t}]+)\}', buffer)
-    for match in matches:
-        # create the output
-        out_rule = create_output(match)
-        rules.append(out_rule)
+        match =re.findall(' name (.+) \{', line)
+        if match.__len__()>0:
+            if blockmatching:
+                # this is the end of the block
+                parseblock(block, rules)
+            # this is a firewall rule name - start storing the text block for parsing
+            rulesetname = match[0]
+            block = line
+            blockmatching = True
 
 def readrules(rules):
     lookfor: str = 'rule'       # can be rule or description
