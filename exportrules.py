@@ -35,7 +35,7 @@ def parseblock(block, rules):
         rules.append(out_rule)
 
 
-def readconfig(rules):
+def read_config_boot(rules):
     # read file into buffer
     root = tk.Tk()
     root.withdraw()
@@ -126,7 +126,7 @@ def writerules(rules):
 
 def main():
     rules = list()
-    readconfig(rules)
+    read_config_boot(rules)
     # readrules(rules)
     writerules(rules)
 
