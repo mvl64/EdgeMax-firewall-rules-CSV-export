@@ -8,25 +8,24 @@ FIREWALL_RULES_CSV = 'firewall_rules.csv'
 
 
 def parseblock(block, rules):
-    reName = re.findall('name (.+) \{', block)
-    reRules = re.findall(' rule (.+) {', block)
-    reActions = re.findall(' action (.+)\n', block)
-    reDescriptions = re.findall(' description (.+)\n', block)
-    do = 0  #do: description offset. This is used because there is not always a description of the ruleset.
-            # In case there isn't, the do = 0!
-    if reDescriptions.__len__()>reRules.__len__():
-        do = 1
+    re_name = re.findall('name (.+) {', block)
+    re_rules = re.findall(' rule (.+) {', block)
+    re_actions = re.findall(' action (.+)\n', block)
+    re_descriptions = re.findall(' description (.+)\n', block)
+    # do: description offset. This is used because there is not always a description of the ruleset.
+    # In case there isn't, the do = 0!
+    do = re_descriptions.__len__() - re_rules.__len__()
 
-    #build the rule list
-    for i in range(0, reRules.__len__()):
-        out_rule = reName[0]+'-'+reRules[i]+'-'+reActions[i][0].upper()
-        out_description = reName[0]+'-'+reDescriptions[i+do].replace('"','')
+    # build the rule list
+    for i in range(0, re_rules.__len__()):
+        out_rule = re_name[0]+'-'+re_rules[i]+'-'+re_actions[i][0].upper()
+        out_description = re_name[0]+'-'+re_descriptions[i+do].replace('"', '')
         rules[out_rule] = out_rule + ',' + out_description
 
 
 def read_config_boot(file_path, rules):
     # read file into buffer
-    buffer = ''
+    block = ''
     blockmatching = False
     i = 0
 
@@ -36,21 +35,19 @@ def read_config_boot(file_path, rules):
         print('Could not open file!')
         exit()
     for line in f:
-        # line = line.strip()
-        i+=1
+        i += 1
         if blockmatching:
             if line == '}':
                 parseblock(block, rules)
             else:
-                block+=line
+                block += line
 
-        match =re.findall(' name (.+) \{', line)
-        if match.__len__()>0:
+        match = re.findall(' name (.+) {', line)
+        if match.__len__() > 0:
             if blockmatching:
                 # this is the end of the block
                 parseblock(block, rules)
             # this is a firewall rule name - start storing the text block for parsing
-            rulesetname = match[0]
             block = line
             blockmatching = True
     f.close()
@@ -76,9 +73,10 @@ def readconfig(file_path, rules):
             rule_elements = re.findall('(^set firewall name )(.+)( rule )(.+) action (.+)', line)
             if rule_elements.__len__() > 0:
                 '-- build the string for this rule'
-                out_rule = rule_elements[0][1].strip() + '-' + rule_elements[0][3].strip() + '-' + rule_elements[0][4][0].upper()
-                searchpattern = rule_elements[0][0] + rule_elements[0][1] + rule_elements[0][2] + rule_elements[0][
-                    3] + ' ' + 'description (.+)'
+                out_rule = rule_elements[0][1].strip() + '-' + rule_elements[0][3].strip() + '-' \
+                           + rule_elements[0][4][0].upper()
+                searchpattern = rule_elements[0][0] + rule_elements[0][1] + rule_elements[0][2] + \
+                                rule_elements[0][3] + ' ' + 'description (.+)'
                 lookfor = 'description'
                 lines = 0
                 out_description = ''
