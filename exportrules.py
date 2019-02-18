@@ -37,8 +37,10 @@ def read_config_boot(file_path, rules):
     for line in f:
         i += 1
         if blockmatching:
-            if line == '}':
+            if line == '}\n':
                 parseblock(block, rules)
+                block = ''
+                blockmatching = False   # there is no new block yet ...
             else:
                 block += line
 
