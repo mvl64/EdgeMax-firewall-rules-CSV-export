@@ -8,6 +8,7 @@ FIREWALL_RULES_CSV = 'firewall_rules.csv'
 
 
 def parseblock(block, rules):
+    re_default = re.findall('default-action (.+)\n',block)
     re_name = re.findall('name (.+) {', block)
     re_rules = re.findall(' rule (.+) {', block)
     re_actions = re.findall(' action (.+)\n', block)
@@ -16,6 +17,9 @@ def parseblock(block, rules):
     # In case there isn't, the do = 0!
     do = re_descriptions.__len__() - re_rules.__len__()
 
+    # write the default rule
+    out_rule = re_name[0]+'-default-'+re_default[0][0].upper()
+    rules[out_rule] = out_rule+','+out_rule
     # build the rule list
     for i in range(0, re_rules.__len__()):
         out_rule = re_name[0]+'-'+re_rules[i]+'-'+re_actions[i][0].upper()
